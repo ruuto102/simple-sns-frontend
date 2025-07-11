@@ -9,7 +9,7 @@ export default function Navbar() {
 
   return (
     <nav className="w-full border-b border-gray-300">
-      <div className="max-w-screen-md mx-auto flex justify-between items-center p-4">
+      <div className="mx-auto flex justify-between items-center p-4">
         <Link to="/" >
           <Logo />
         </Link>
