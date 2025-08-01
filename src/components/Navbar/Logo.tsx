@@ -1,9 +1,8 @@
 export default function Logo() {
   return (
-    <div className="flex items-center gap-1">
-      {/* Logo */}
-      <div className="w-6 h-6 bg-gray-300" />
-      <span className="text-sm font-semibold">Cosbum</span>
+    <div className="flex items-center gap-3">
+        <img src="/logo.png" alt="Logo" className="w-6 h-6 scale-150" />
+      <span className="text-xl font-semibold">Cosbum</span>
     </div>
   )
 }
