@@ -8,7 +8,7 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="w-full bg-pink-100">
+    <nav className="w-full bg-white shadow-md">
       <div className="mx-auto flex justify-between items-center p-4">
         <Link to="/" >
           <Logo />
