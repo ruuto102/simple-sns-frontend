@@ -6,34 +6,24 @@ const keycloak = new Keycloak({
     clientId: 'cosbum-frontend',
 })
 
-const initKeycloak = () => {
-    return keycloak.init({
+const keycloakService = {
+    keycloak,
+    initKeycloak: () => keycloak.init({
         onLoad: 'check-sso',
         pkceMethod: 'S256',
         checkLoginIframe: false,
-        silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html',
-    })
+        silentCheckSsoRedirectUri: `${window.location.origin}/silent-check-sso.html`,
+    }),
+    login: () => keycloak.login(),
+    logout: () => keycloak.logout({ redirectUri: window.location.origin }),
+    isAuthenticated: () => keycloak.authenticated ?? false,
+    getToken: () => keycloak.token,
+    updateToken: () => keycloak.updateToken(30),
+    getUserName: async (): Promise<string | null> => {
+        if (!keycloak.authenticated) return null
+        const info: any = await keycloak.loadUserInfo()
+        return info.preferred_username || info.name || null
+    },
 }
 
-const login = () => keycloak.login()
-const logout = () => keycloak.logout({ redirectUri: window.location.origin })
-const isAuthenticated = () => keycloak.authenticated ?? false
-const getToken = () => keycloak.token
-const updateToken = () => keycloak.updateToken(30)
-
-const getUserName = async (): Promise<string | null> => {
-    if (!keycloak.authenticated) return null
-    const info: any = await keycloak.loadUserInfo()
-    return info.preferred_username || info.name || null
-}
-
-export default {
-    keycloak,
-    initKeycloak,
-    login,
-    logout,
-    isAuthenticated,
-    getToken,
-    updateToken,
-    getUserName,
-}
+export default keycloakService

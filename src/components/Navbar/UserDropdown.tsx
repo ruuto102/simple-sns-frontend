@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { UserCircle } from 'lucide-react'
-import auth from '../../services/keycloak'
+import keycloakService from '../../services/keycloak';
 
 export default function UserDropdown({ userName }: { userName: string }) {
     const [showMenu, setShowMenu] = useState(false)
 
-    const handleLogout = () => auth.logout()
-    const handleLogin = () => auth.login()
+    const handleLogout = () => keycloakService.logout()
+    const handleLogin = () => keycloakService.login()
 
     return (
         <div className="relative">
@@ -19,7 +19,7 @@ export default function UserDropdown({ userName }: { userName: string }) {
             </div>
             {showMenu && (
                 <div className="absolute right-0 mt-2 w-32 bg-white border rounded shadow text-sm z-10">
-                    {auth.isAuthenticated() ? (
+                    {keycloakService.isAuthenticated() ? (
                         <button
                             className="w-full text-left px-4 py-2 hover:bg-gray-100"
                             onClick={handleLogout}

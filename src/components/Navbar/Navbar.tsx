@@ -1,14 +1,14 @@
 import Logo from './Logo'
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import auth from '../../services/keycloak'
 import UserDropdown from './UserDropdown'
+import keycloakService from '../../services/keycloak';
 
 export default function Navbar() {
   const [userName, setUserName] = useState('')
 
   useEffect(() => {
-    auth.getUserName().then(name => {
+    keycloakService.getUserName().then(name => {
       if (name) setUserName(name)
     })
   }, [])
