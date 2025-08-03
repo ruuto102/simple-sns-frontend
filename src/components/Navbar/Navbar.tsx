@@ -2,19 +2,15 @@ import Logo from './Logo'
 import { UserCircle } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import keycloak from '../../keycloak'
+import auth from '../../services/keycloak'
 
 export default function Navbar() {
   const [userName, setUserName] = useState('')
 
   useEffect(() => {
-    keycloak.onReady = () => {
-      if (keycloak.authenticated) {
-        keycloak.loadUserInfo().then((info: any) => {
-          setUserName(info.preferred_username)
-        })
-      }
-    }
+    auth.getUserName().then(name => {
+      if (name) setUserName(name)
+    })
   }, [])
 
   const handleUserClick = () => {
