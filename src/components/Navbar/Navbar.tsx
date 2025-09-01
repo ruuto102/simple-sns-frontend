@@ -1,20 +1,26 @@
 import Logo from './Logo'
-import { UserCircle } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import UserDropdown from './UserDropdown'
+import keycloakService from '../../services/keycloak';
 
 export default function Navbar() {
-  const handleUserClick = () => {
-    console.log('Clicked UserIcon!')
-  }
+  const [userName, setUserName] = useState('')
+
+  useEffect(() => {
+    keycloakService.getUserName().then(name => {
+      if (name) setUserName(name)
+    })
+  }, [])
 
   return (
-    <nav className="w-full bg-white shadow-md">
-      <div className="mx-auto flex justify-between items-center p-4">
-        <Link to="/" >
-          <Logo />
-        </Link>
-          <UserCircle onClick={handleUserClick} className="w-6 h-6 text-gray-700" />
-      </div>
-    </nav>
+      <nav className="w-full bg-pink-100">
+        <div className="mx-auto flex justify-between items-center p-4">
+          <Link to="/">
+            <Logo />
+          </Link>
+          <UserDropdown userName={userName} />
+        </div>
+      </nav>
   )
 }
